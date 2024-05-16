@@ -1,10 +1,11 @@
 import { executeFrontend } from '@bosapi/boslib';
 import type { PageStore } from "./types/PageStore.js";
 import type { TModal } from "./types/Component.js";
+import { modal, globalActions } from './store.js';
 // @ts-ignore
 export { default as Bosgrid } from './grid/index.svelte';
 export type { PageStore, TModal };
-export * from './store.js';
+export { modal, globalActions };
 export const execute = async (action: any, inputs: any, options: any) => {
   // console.log(inputs)
   const res = await executeFrontend(action, {
