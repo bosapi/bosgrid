@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
+	import { page } from "$app/stores";
 	import { execute } from "$lib/index.js";
 	import { modal } from "$lib/store.js";
 	import type { PageStore } from "$lib/types/PageStore.js";
@@ -15,6 +16,16 @@
 	const mappingAction: any = data.mapping_action || {};
 	const componentConfig: any = {};
 	const componentData: any = {};
+
+	function getUrlQuery() {
+		const query: any = {};
+		if ($page && $page.url.searchParams.size > 0) {
+			for (const key of $page.url.searchParams.keys()) {
+				query[key] = $page.url.searchParams.get(key);
+			}
+		}
+		return query;
+	}
 
 	const unsubscribe = pageStore.subscribe(async (val) => {
 		// handle circular
@@ -40,6 +51,7 @@
 						{
 							detail: val.detail,
 							pageStore,
+							query: getUrlQuery(),
 							componentConfig: getComponentConfig(),
 							componentData: getComponentData(),
 						},
